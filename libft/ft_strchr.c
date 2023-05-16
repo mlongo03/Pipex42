@@ -1,24 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pipex.h                                            :+:      :+:    :+:   */
+/*   ft_strchr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alessiolongo <alessiolongo@student.42.f    +#+  +:+       +#+        */
+/*   By: mlongo <mlongo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/05/15 14:14:11 by mlongo            #+#    #+#             */
-/*   Updated: 2023/05/16 12:52:28 by alessiolong      ###   ########.fr       */
+/*   Created: 2023/04/04 19:16:18 by mlongo            #+#    #+#             */
+/*   Updated: 2023/04/04 19:16:37 by mlongo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PIPEX_C
-# define PIPEX_C
+#include "libft.h"
 
-# include <unistd.h>
-# include <stdio.h>
-# include <stdlib.h>
-# include <string.h>
-# include <sys/wait.h>
-# include <fcntl.h>
-# include "./libft/libft.h"
+char	*ft_strchr(const char *s, int c)
+{
+	char	*r;
+	char	x;
 
-#endif
+	x = (char) c;
+	r = (char *) s;
+	while (*r && *r != x)
+		r++;
+	if (*r == x)
+		return (r);
+	return (0);
+}
