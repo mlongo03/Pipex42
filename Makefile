@@ -3,16 +3,16 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: alessiolongo <alessiolongo@student.42.f    +#+  +:+       +#+         #
+#    By: mlongo <mlongo@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/04/28 17:09:03 by mlongo            #+#    #+#              #
-#    Updated: 2023/05/16 12:56:21 by alessiolong      ###   ########.fr        #
+#    Updated: 2023/05/17 12:04:27 by mlongo           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME := pipex
 
-OBJS := test.o
+OBJS := test.o processes.o error.o
 
 LIBFT_PATH = ./libft
 

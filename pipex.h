@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipex.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alessiolongo <alessiolongo@student.42.f    +#+  +:+       +#+        */
+/*   By: mlongo <mlongo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 14:14:11 by mlongo            #+#    #+#             */
-/*   Updated: 2023/05/16 12:52:28 by alessiolong      ###   ########.fr       */
+/*   Updated: 2023/05/17 12:17:34 by mlongo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,5 +20,21 @@
 # include <sys/wait.h>
 # include <fcntl.h>
 # include "./libft/libft.h"
+
+typedef struct s_pipex
+{
+	int 	fdfile1;
+	int 	fdfile2;
+	int 	fd[2];
+	char	**argvsplit1;
+	char	**argvsplit2;
+	char	**paths;
+	char	*path;
+	int		original_fd_stdout;
+}	t_pipex;
+
+int	ft_error(char *str);
+int	child_process1(t_pipex pipe, int i, char **envp);
+int	child_process2(t_pipex pipe, int i, char **envp);
 
 #endif

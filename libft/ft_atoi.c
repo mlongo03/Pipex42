@@ -6,18 +6,18 @@
 /*   By: mlongo <mlongo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/04 19:12:16 by mlongo            #+#    #+#             */
-/*   Updated: 2023/04/04 19:12:32 by mlongo           ###   ########.fr       */
+/*   Updated: 2023/05/17 11:26:28 by mlongo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-int static	ft_sign(char c)
+static int	ft_sign(char c)
 {
 	return (c == '-' || c == '+');
 }
 
-int static	ft_spaces(char c)
+static int	ft_spaces(char c)
 {
 	return (c == ' ' || c == '\t' || c == '\n' || c == '\r'
 		|| c == '\v' || c == '\f');
