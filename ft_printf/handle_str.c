@@ -1,39 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strjoin.c                                       :+:      :+:    :+:   */
+/*   handle_str.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mlongo <mlongo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/04/04 19:17:02 by mlongo            #+#    #+#             */
-/*   Updated: 2023/05/17 14:47:28 by mlongo           ###   ########.fr       */
+/*   Created: 2023/04/18 14:47:06 by mlongo            #+#    #+#             */
+/*   Updated: 2023/04/19 11:27:38 by mlongo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "ft_printf.h"
 
-char	*ft_strjoin(char const *s1, char const *s2)
+int	handle_str(char *str)
 {
-	char	*res;
-	size_t	i;
+	int	i;
 
-	if (!s1 || !s2)
-		return (NULL);
-	res = malloc(ft_strlen(s1) + ft_strlen(s2) + 1);
-	if (res == NULL)
-		return (NULL);
+	if (str == NULL)
+		str = "(null)";
 	i = 0;
-	res[ft_strlen(s1) + ft_strlen(s2)] = 0;
-	while (i < ft_strlen(s1))
+	while (*str)
 	{
-		res[i] = s1[i];
+		handle_c(*str++);
 		i++;
 	}
-	i = 0;
-	while (i < ft_strlen(s2))
-	{
-		res[ft_strlen(s1) + i] = s2[i];
-		i++;
-	}
-	return (res);
+	return (i);
 }

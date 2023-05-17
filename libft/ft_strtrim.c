@@ -6,13 +6,13 @@
 /*   By: mlongo <mlongo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/04 19:18:00 by mlongo            #+#    #+#             */
-/*   Updated: 2023/04/04 19:18:01 by mlongo           ###   ########.fr       */
+/*   Updated: 2023/05/17 14:43:51 by mlongo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-char	*ft_strtrim(char const *s1, char const *set)
+char	*ft_strtrim(char *s1, char const *set)
 {
 	int		start;
 	int		end;
@@ -32,5 +32,6 @@ char	*ft_strtrim(char const *s1, char const *set)
 	if (!str)
 		return (NULL);
 	ft_strlcpy(str, &s1[start], end - start + 2);
+	free(s1);
 	return (str);
 }

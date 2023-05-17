@@ -1,39 +1,40 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strjoin.c                                       :+:      :+:    :+:   */
+/*   handle_hexupper.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mlongo <mlongo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/04/04 19:17:02 by mlongo            #+#    #+#             */
-/*   Updated: 2023/05/17 14:47:28 by mlongo           ###   ########.fr       */
+/*   Created: 2023/04/18 15:25:28 by mlongo            #+#    #+#             */
+/*   Updated: 2023/04/19 16:23:25 by mlongo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "ft_printf.h"
 
-char	*ft_strjoin(char const *s1, char const *s2)
+void	print_hexa1(unsigned int n, char *hexa, int *i)
 {
-	char	*res;
-	size_t	i;
+	if (n < 16)
+	{
+		handle_c(hexa[n]);
+		*i = *i + 1;
+	}
+	else
+	{
+		print_hexa1(n / 16, hexa, i);
+		print_hexa1(n % 16, hexa, i);
+	}
+}
 
-	if (!s1 || !s2)
-		return (NULL);
-	res = malloc(ft_strlen(s1) + ft_strlen(s2) + 1);
-	if (res == NULL)
-		return (NULL);
+int	handle_hexupper(unsigned int p)
+{
+	char			*hexa;
+	unsigned int	number;
+	int				i;
+
 	i = 0;
-	res[ft_strlen(s1) + ft_strlen(s2)] = 0;
-	while (i < ft_strlen(s1))
-	{
-		res[i] = s1[i];
-		i++;
-	}
-	i = 0;
-	while (i < ft_strlen(s2))
-	{
-		res[ft_strlen(s1) + i] = s2[i];
-		i++;
-	}
-	return (res);
+	number = (unsigned int)p;
+	hexa = "0123456789ABCDEF";
+	print_hexa1(number, hexa, &i);
+	return (i);
 }

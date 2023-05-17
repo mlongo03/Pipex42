@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   test.c                                             :+:      :+:    :+:   */
+/*   pipex.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mlongo <mlongo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/16 12:44:56 by alessiolong       #+#    #+#             */
-/*   Updated: 2023/05/17 13:01:04 by mlongo           ###   ########.fr       */
+/*   Updated: 2023/05/17 14:53:29 by mlongo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ int	main(int argc, char **argv, char **envp)
 	piping.fdfile1 = open(argv[1], O_RDONLY);
 	if (piping.fdfile1 == -1)
 		return (ft_error("Infile: No such file or directory"));
-	piping.fdfile2 = open(argv[4], O_WRONLY | O_TRUNC | O_CREAT);
+	piping.fdfile2 = open(argv[4], O_WRONLY | O_TRUNC | O_CREAT, 0644);
 	if (piping.fdfile2 == -1)
 		return (ft_error("Outfile: No such file or directory"));
 	piping.argvsplit1 = ft_split(argv[2], ' ');

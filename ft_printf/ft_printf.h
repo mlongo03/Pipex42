@@ -1,29 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   error.c                                            :+:      :+:    :+:   */
+/*   ft_printf.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mlongo <mlongo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/05/17 11:31:06 by mlongo            #+#    #+#             */
-/*   Updated: 2023/05/17 15:01:19 by mlongo           ###   ########.fr       */
+/*   Created: 2023/04/17 14:21:40 by mlongo            #+#    #+#             */
+/*   Updated: 2023/04/19 16:22:29 by mlongo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "pipex.h"
+#ifndef FT_PRINTF_H
+# define FT_PRINTF_H
 
-int	ft_error(char *str)
-{
-	ft_printf("%s", str);
-	return (1);
-}
+# include <unistd.h>
+# include <stdlib.h>
+# include <stdarg.h>
+# include <string.h>
 
-void	ft_free(char **split)
-{
-	int i;
+int		ft_printf(const char *str, ...);
+void	handle_c(char c);
+int		handle_str(char *str);
+int		handle_void(void *p);
+int		handle_decimal(int n);
+int		handle_unsdec10(unsigned int n);
+int		handle_hexupper(unsigned int p);
+int		handle_hexlower(unsigned int p);
 
-	i = 0;
-	while (split[i])
-		free(split[i++]);
-	free(split);
-}
+#endif

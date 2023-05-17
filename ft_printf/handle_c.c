@@ -1,29 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   error.c                                            :+:      :+:    :+:   */
+/*   handle_c.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mlongo <mlongo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/05/17 11:31:06 by mlongo            #+#    #+#             */
-/*   Updated: 2023/05/17 15:01:19 by mlongo           ###   ########.fr       */
+/*   Created: 2023/04/17 18:06:27 by mlongo            #+#    #+#             */
+/*   Updated: 2023/04/18 14:36:36 by mlongo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "pipex.h"
+#include "ft_printf.h"
 
-int	ft_error(char *str)
+void	handle_c(char c)
 {
-	ft_printf("%s", str);
-	return (1);
-}
-
-void	ft_free(char **split)
-{
-	int i;
-
-	i = 0;
-	while (split[i])
-		free(split[i++]);
-	free(split);
+	write(1, &c, 1);
 }

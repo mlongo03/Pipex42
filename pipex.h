@@ -6,7 +6,7 @@
 /*   By: mlongo <mlongo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 14:14:11 by mlongo            #+#    #+#             */
-/*   Updated: 2023/05/17 12:53:57 by mlongo           ###   ########.fr       */
+/*   Updated: 2023/05/17 15:02:02 by mlongo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@
 # include <sys/wait.h>
 # include <fcntl.h>
 # include "./libft/libft.h"
+# include "./ft_printf/ft_printf.h"
 
 typedef struct s_pipex
 {
@@ -33,9 +34,9 @@ typedef struct s_pipex
 	int		original_fd_stdout;
 }	t_pipex;
 
-int	ft_error(char *str);
-int	child_process1(t_pipex pipe, int i, char **envp);
-int	child_process2(t_pipex pipe, int i, char **envp);
-int	ft_free(char **split);
+int		ft_error(char *str);
+int		child_process1(t_pipex pipe, int i, char **envp);
+int		child_process2(t_pipex pipe, int i, char **envp);
+void	ft_free(char **split);
 
 #endif
