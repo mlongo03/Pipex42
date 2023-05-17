@@ -6,7 +6,7 @@
 /*   By: mlongo <mlongo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/17 11:31:06 by mlongo            #+#    #+#             */
-/*   Updated: 2023/05/17 15:01:19 by mlongo           ###   ########.fr       */
+/*   Updated: 2023/05/17 15:07:57 by mlongo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ int	ft_error(char *str)
 
 void	ft_free(char **split)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (split[i])

@@ -6,7 +6,7 @@
 /*   By: mlongo <mlongo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/16 12:44:56 by alessiolong       #+#    #+#             */
-/*   Updated: 2023/05/17 14:53:29 by mlongo           ###   ########.fr       */
+/*   Updated: 2023/05/17 15:44:02 by mlongo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 
 int	main(int argc, char **argv, char **envp)
 {
-	t_pipex piping;
-	int i;
+	t_pipex	piping;
+	int		i;
 
 	if (argc != 5)
 		return (ft_error("numero di argomenti non valido"));
@@ -31,31 +31,36 @@ int	main(int argc, char **argv, char **envp)
 	piping.original_fd_stdout = dup(STDOUT_FILENO);
 	if (pipe(piping.fd) == -1)
 		return (ft_error("piping failed"));
-	while (envp[i])
-	{
-		if (ft_strnstr(envp[i], "PATH=", 5) != 0)
-			break;
-		i++;
-	}
-	piping.paths = ft_split(envp[i], ':');
-	piping.paths[0] = ft_strtrim(piping.paths[0], "PATH=");
-	int pid1 = fork();
-	if (pid1 < 0)
-		return (0);
-	i = 0;
-	if (pid1 == 0)
-		child_process1(piping, i, envp);
-	waitpid(pid1, NULL, 0);
-	int pid2 = fork();
-	if (pid2 < 0)
-		return (0);
-	i = 0;
-	if (pid2 == 0)
-		child_process2(piping, i, envp);
+	split_main(&piping, i, envp);
 	close(piping.fd[0]);
 	close(piping.fd[1]);
 	ft_free(piping.argvsplit1);
 	ft_free(piping.argvsplit2);
 	ft_free(piping.paths);
-	waitpid(pid2, NULL, 0);
+	waitpid(piping.pid2, NULL, 0);
+}
+
+void	split_main(t_pipex *piping, int i, char **envp)
+{
+	while (envp[i])
+	{
+		if (ft_strnstr(envp[i], "PATH=", 5) != 0)
+			break ;
+		i++;
+	}
+	piping->paths = ft_split(envp[i], ':');
+	piping->paths[0] = ft_strtrim(piping->paths[0], "PATH=");
+	piping->pid1 = fork ();
+	if (piping->pid1 < 0)
+		exit (1);
+	i = 0;
+	if (piping->pid1 == 0)
+		child_process1(*piping, i, envp);
+	waitpid(piping->pid1, NULL, 0);
+	piping->pid2 = fork();
+	if (piping->pid2 < 0)
+		exit (0);
+	i = 0;
+	if (piping->pid2 == 0)
+		child_process2(*piping, i, envp);
 }
