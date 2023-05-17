@@ -6,7 +6,7 @@
 #    By: mlongo <mlongo@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/04/28 17:09:03 by mlongo            #+#    #+#              #
-#    Updated: 2023/05/17 12:04:27 by mlongo           ###   ########.fr        #
+#    Updated: 2023/05/17 13:02:41 by mlongo           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,7 +27,7 @@ all: $(NAME)
 
 $(NAME): $(OBJS)
 	make -C libft
-	cc $(OBJS) ${LIBFT} -o $(NAME)
+	cc $(OBJS) ${LIBFT} -o $(NAME) -fsanitize=address
 
 clean:
 	make clean -C libft

@@ -6,7 +6,7 @@
 /*   By: mlongo <mlongo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/16 12:44:56 by alessiolong       #+#    #+#             */
-/*   Updated: 2023/05/17 12:17:16 by mlongo           ###   ########.fr       */
+/*   Updated: 2023/05/17 13:01:04 by mlongo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,5 +54,8 @@ int	main(int argc, char **argv, char **envp)
 		child_process2(piping, i, envp);
 	close(piping.fd[0]);
 	close(piping.fd[1]);
+	ft_free(piping.argvsplit1);
+	ft_free(piping.argvsplit2);
+	ft_free(piping.paths);
 	waitpid(pid2, NULL, 0);
 }
