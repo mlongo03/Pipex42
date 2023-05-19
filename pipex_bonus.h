@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipex_bonus.h                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alessiolongo <alessiolongo@student.42.f    +#+  +:+       +#+        */
+/*   By: mlongo <mlongo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 14:14:11 by mlongo            #+#    #+#             */
-/*   Updated: 2023/05/18 19:21:22 by alessiolong      ###   ########.fr       */
+/*   Updated: 2023/05/19 17:36:59 by mlongo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ typedef struct s_pipex
 	int		fdfile2;
 	int		pid1;
 	int		pid2;
+	int		*fd;
 	char	**paths;
 	char	*path;
 	int		original_fd_stdout;
@@ -38,12 +39,14 @@ typedef struct s_pipex
 }	t_pipex;
 
 int		ft_error(char *str);
-int		child_process1(t_pipex piping, int i, char **envp, int fd[][2]);
-int		child_process2(t_pipex piping, int i, int fd[][2], int j);
-void	ft_free(char **split);
+int		child_process1(t_pipex piping, int i, char **envp);
+int		child_process2(t_pipex piping, int i,int j);
+void	ft_free(char **split, int **fd, int numpipe);
 void	ft_free2(char ***splits);
-void	split_main(t_pipex *piping, int i, int fd[][2], int argc);
+void	ft_free3(char **split);
+void	split_main(t_pipex *piping, int i,int argc);
 char	***create_comandsplits(int cmds, char **argv);
-void	close_fds(t_pipex *piping, int fd[][2], int num);
+void	close_fds(t_pipex *piping, int numpipe);
+void	create_fds(t_pipex *piping, int numpipe);
 
 #endif
