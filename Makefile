@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: mlongo <mlongo@student.42.fr>              +#+  +:+       +#+         #
+#    By: alessiolongo <alessiolongo@student.42.f    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/04/28 17:09:03 by mlongo            #+#    #+#              #
-#    Updated: 2023/05/17 19:19:59 by mlongo           ###   ########.fr        #
+#    Updated: 2023/05/18 19:10:44 by alessiolong      ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -31,7 +31,7 @@ all: $(NAME)
 bonus: $(OBJS_BONUS)
 	make -C libft
 	make -C ft_printf
-	cc $(OBJS_BONUS) ${LIBFT} $(FT_PRINTF) -o $(NAME) -fsanitize=address
+	cc $(OBJS_BONUS) ${LIBFT} $(FT_PRINTF) -o $(NAME)
 
 %.o : %.c
 	cc $(FLAGS) -c $< -o $@

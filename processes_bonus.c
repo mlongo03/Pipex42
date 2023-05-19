@@ -3,64 +3,62 @@
 /*                                                        :::      ::::::::   */
 /*   processes_bonus.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mlongo <mlongo@student.42.fr>              +#+  +:+       +#+        */
+/*   By: alessiolongo <alessiolongo@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/17 11:38:44 by mlongo            #+#    #+#             */
-/*   Updated: 2023/05/17 19:16:50 by mlongo           ###   ########.fr       */
+/*   Updated: 2023/05/18 20:10:29 by alessiolong      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "pipex.h"
+#include "pipex_bonus.h"
 
-int	child_process1(t_pipex piping, int i, char **envp)
+int	child_process1(t_pipex piping, int i, char **envp, int fd[][2])
 {
 	char	*tmp;
 
 	dup2(piping.fdfile1, STDIN_FILENO);
-	dup2(piping.fd[0][1], STDOUT_FILENO);
-	close_fds(); //funzione che mi chiude i file descriptor
+	dup2(fd[0][1], STDOUT_FILENO);
+	close_fds(&piping, fd, piping.argc - 4);
 	while (piping.paths[i])
 	{
 		piping.path = ft_strjoin(piping.paths[i], "/");
 		tmp = piping.path;
-		piping.path = ft_strjoin(piping.path, piping.argvsplit1[0]);
+		piping.path = ft_strjoin(piping.path, piping.comandsplits[0][0]);
 		free(tmp);
-		execve(piping.path, piping.argvsplit1, envp);
+		execve(piping.path, piping.comandsplits[0], envp);
 		free(piping.path);
 		i++;
 	}
 	dup2(piping.original_fd_stdout, STDOUT_FILENO);
-	printf("%s : command not found\n", piping.argvsplit1[0]);
-	ft_free(piping.argvsplit1);
-	ft_free(piping.argvsplit2);
+	printf("%s : command not found\n", piping.comandsplits[0][0]);
+	ft_free2(piping.comandsplits);
 	ft_free(piping.paths);
 	exit (1);
 }
 
-int	child_process2(t_pipex piping, int i, char **envp, int flag, int npipe)
+int	child_process2(t_pipex piping, int i, int fd[][2], int j)
 {
 	char	*tmp;
 
-	if (flag == 1)
+	if (piping.flag == 1)
 		dup2(piping.fdfile2, STDOUT_FILENO);
 	else
-		dup2(piping.fd[npipe][1], STDOUT_FILENO);
-	dup2(piping.fd[0], STDIN_FILENO);
-	close_fds();
+		dup2(fd[j + 1][1], STDOUT_FILENO);
+	dup2(fd[j][0], STDIN_FILENO);
+	close_fds(&piping, fd, piping.argc - 4);
 	while (piping.paths[i])
 	{
 		piping.path = ft_strjoin(piping.paths[i], "/");
 		tmp = piping.path;
-		piping.path = ft_strjoin(piping.path, piping.argvsplit2[0]);
+		piping.path = ft_strjoin(piping.path, piping.comandsplits[j + 1][0]);
 		free(tmp);
-		execve(piping.path, piping.argvsplit2, envp);
+		execve(piping.path, piping.comandsplits[j + 1], piping.envp);
 		free(piping.path);
 		i++;
 	}
 	dup2(piping.original_fd_stdout, STDOUT_FILENO);
-	printf("%s : command not found\n", piping.argvsplit2[0]);
-	ft_free(piping.argvsplit1);
-	ft_free(piping.argvsplit2);
+	printf("%s : command not found\n", piping.comandsplits[j + 1][0]);
+	ft_free2(piping.comandsplits);
 	ft_free(piping.paths);
 	exit (1);
 }
