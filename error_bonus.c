@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   error_bonus.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mlongo <mlongo@student.42.fr>              +#+  +:+       +#+        */
+/*   By: alessiolongo <alessiolongo@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/17 11:31:06 by mlongo            #+#    #+#             */
-/*   Updated: 2023/05/19 14:35:06 by mlongo           ###   ########.fr       */
+/*   Updated: 2023/05/20 18:33:32 by alessiolong      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ int	ft_error(char *str)
 	return (1);
 }
 
-void	ft_free(char **split, int **fd, int numpipe)
+void	ft_free(char **split, int *fd, int numpipe)
 {
 	int	i;
 
@@ -27,9 +27,8 @@ void	ft_free(char **split, int **fd, int numpipe)
 		free(split[i++]);
 	free(split);
 	i = 0;
-	while (i < numpipe)
-		free(fd[i++]);
-	free(fd);
+	while (i < (numpipe * 2))
+		free(&fd[i++]);
  }
 
 void	ft_free3(char **split)
@@ -75,19 +74,6 @@ void	close_fds(t_pipex *piping, int numpipe)
 	i = 0;
 	close(piping->fdfile1);
 	close(piping->fdfile2);
-	while (i < numpipe)
-	{
-		close(piping->fd[i][0]);
-		close(piping->fd[i][1]);
-		i++;
-	}
-}
-
-void	create_fds(t_pipex *piping, int numpipe)
-{
-	int	i;
-
-	i = 0;
-	while (i < numpipe)
-		piping->fd[i++] = (int *)malloc(2 * sizeof(int));
+	while (i < (numpipe * 2))
+		close(piping->fd[i++]);
 }
