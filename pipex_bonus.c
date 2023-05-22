@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipex_bonus.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alessiolongo <alessiolongo@student.42.f    +#+  +:+       +#+        */
+/*   By: mlongo <mlongo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/16 12:44:56 by alessiolong       #+#    #+#             */
-/*   Updated: 2023/05/20 18:56:19 by alessiolong      ###   ########.fr       */
+/*   Updated: 2023/05/22 18:50:59 by mlongo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,28 +21,23 @@ int	main(int argc, char **argv, char **envp)
 	piping.argc = argc;
 	if (argc < 5)
 		return (ft_error("numero di argomenti non valido"));
-	piping.fd = (int *)malloc((argc - 4) * 2 * sizeof(int));
-	piping.fdfile1 = open(argv[1], O_RDONLY);
-	if (piping.fdfile1 == -1)
-		return (ft_error("Infile: No such file or directory"));
-	piping.fdfile2 = open(argv[argc-1], O_WRONLY | O_TRUNC | O_CREAT, 0644);
-	if (piping.fdfile2 == -1)
-		return (ft_error("Outfile: No such file or directory"));
-	piping.comandsplits = create_comandsplits(argc - 3, argv);
+	get_infile(&piping, argv);
+	get_outfile(&piping, argv, argc);
+	piping.fd = (int *)malloc((argc - 4 - piping.here_doc) * 2 * sizeof(int));
+	piping.comandsplits = create_comandsplits(piping, argc - 3 - piping.here_doc, argv);
 	piping.original_fd_stdout = dup(STDOUT_FILENO);
 	i = 0;
-	while (argc > 4)
+	while (argc-- > (4 + piping.here_doc))
 	{
 		if (pipe(piping.fd + 2 * i) == -1)
 			return (ft_error("piping failed"));
 		i++;
-		argc--;
 	}
 	i = 0;
 	split_main(&piping, i, piping.argc);
-	close_fds(&piping, piping.argc - 4);
+	close_fds(&piping, piping.argc - 4 - piping.here_doc);
 	ft_free2(piping.comandsplits);
-	// ft_free(piping.paths, piping.fd, piping.argc - 4);
+	ft_free(piping.paths, piping.fd);
 	waitpid(-1, NULL, 0);
 }
 
@@ -65,7 +60,7 @@ void	split_main(t_pipex *piping, int i, int argc)
 	i = 0;
 	if (piping->pid1 == 0)
 		child_process1(*piping, i, piping->envp);
-	while(argc > 4)
+	while (argc > (4 + piping->here_doc))
 	{
 		piping->pid2 = fork();
 		if (piping->pid2 < 0)
@@ -73,7 +68,7 @@ void	split_main(t_pipex *piping, int i, int argc)
 		i = 0;
 		if (piping->pid2 == 0)
 		{
-			if (argc == 5)
+			if (argc == (5 + piping->here_doc))
 				piping->flag = 1;
 			else
 				piping->flag = 0;

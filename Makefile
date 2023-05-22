@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: alessiolongo <alessiolongo@student.42.f    +#+  +:+       +#+         #
+#    By: mlongo <mlongo@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/04/28 17:09:03 by mlongo            #+#    #+#              #
-#    Updated: 2023/05/20 18:55:24 by alessiolong      ###   ########.fr        #
+#    Updated: 2023/05/22 16:48:08 by mlongo           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,7 +14,7 @@ NAME := pipex
 
 OBJS := pipex.o processes.o error.o
 
-OBJS_BONUS := pipex_bonus.o processes_bonus.o error_bonus.o
+OBJS_BONUS := pipex_bonus.o processes_bonus.o error_bonus.o get_next_line.o get_next_line_utils.o
 
 LIBFT_PATH = ./libft
 
