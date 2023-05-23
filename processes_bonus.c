@@ -6,11 +6,58 @@
 /*   By: mlongo <mlongo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/17 11:38:44 by mlongo            #+#    #+#             */
-/*   Updated: 2023/05/22 18:38:36 by mlongo           ###   ########.fr       */
+/*   Updated: 2023/05/23 11:02:49 by mlongo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex_bonus.h"
+
+void	close_fds(t_pipex *piping, int numpipe)
+{
+	int	i;
+
+	i = 0;
+	close(piping->fdfile1);
+	close(piping->fdfile2);
+	while (i < (numpipe * 2))
+		close(piping->fd[i++]);
+	if (piping->here_doc)
+		unlink(".helper_tmp");
+}
+
+void	get_outfile(t_pipex *piping, char **argv, int argc)
+{
+	if (piping->here_doc)
+		piping->fdfile2 = open(argv[argc - 1],
+				O_WRONLY | O_CREAT | O_APPEND, 0000644);
+	else
+		piping->fdfile2 = open(argv[argc - 1],
+				O_WRONLY | O_TRUNC | O_CREAT, 0644);
+	if (piping->fdfile1 < 0)
+	{
+		ft_error("outfile fail");
+		exit (1);
+	}
+}
+
+void	get_infile(t_pipex *piping, char **argv)
+{
+	if (ft_strncmp("here_doc", argv[1], 8) == 0 && ft_strlen(argv[1]) == 8)
+	{
+		here_doc_handle(piping, argv);
+		piping->here_doc = 1;
+	}
+	else
+	{
+		piping->fdfile1 = open(argv[1], O_RDONLY);
+		if (piping->fdfile1 == -1)
+		{
+			ft_error("Infile: No such file or directory");
+			exit (1);
+		}
+		piping->here_doc = 0;
+	}
+}
 
 int	child_process1(t_pipex piping, int i, char **envp)
 {
@@ -45,7 +92,8 @@ int	child_process2(t_pipex piping, int i, int j)
 		dup2(*(piping.fd + ((2 * (j + 1)) + 1)), STDOUT_FILENO);
 	dup2(*(piping.fd + 2 * j), STDIN_FILENO);
 	close_fds(&piping, piping.argc - 4 - piping.here_doc);
-	execve(piping.comandsplits[j + 1][0], piping.comandsplits[j + 1], piping.envp);
+	execve(piping.comandsplits[j + 1][0],
+		piping.comandsplits[j + 1], piping.envp);
 	while (piping.paths[i])
 	{
 		piping.path = ft_strjoin(piping.paths[i], "/");

@@ -6,7 +6,7 @@
 #    By: mlongo <mlongo@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/04/04 19:18:35 by mlongo            #+#    #+#              #
-#    Updated: 2023/04/05 16:03:38 by mlongo           ###   ########.fr        #
+#    Updated: 2023/05/23 11:13:57 by mlongo           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -30,18 +30,18 @@ B_OBJS = ft_lstnew.o ft_lstadd_front.o ft_lstsize.o ft_lstlast.o ft_lstadd_back.
 all: $(NAME)
 
 %.o : %.c
-	gcc $(FLAGS) -o $@ -c $<
+	@gcc $(FLAGS) -o $@ -c $<
 
 $(NAME): $(OBJS)
-	ar crs libft.a $(OBJS)
+	@ar crs libft.a $(OBJS)
 
 bonus : ${B_OBJS}
-	ar crs libft.a $(B_OBJS)
+	@ar crs libft.a $(B_OBJS)
 
 clean:
-	rm -f $(OBJS) ${B_OBJS}
+	@rm -f $(OBJS) ${B_OBJS}
 
 fclean: clean
-	rm -f $(NAME)
+	@rm -f $(NAME)
 
 re: fclean all

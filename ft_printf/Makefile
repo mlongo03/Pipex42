@@ -6,7 +6,7 @@
 #    By: mlongo <mlongo@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/04/04 19:18:35 by mlongo            #+#    #+#              #
-#    Updated: 2023/04/19 11:02:41 by mlongo           ###   ########.fr        #
+#    Updated: 2023/05/23 11:14:21 by mlongo           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,15 +19,15 @@ FLAGS := -Wall -Werror -Wextra
 all: $(NAME)
 
 %.o : %.c
-	gcc $(FLAGS) -o $@ -c $<
+	@gcc $(FLAGS) -o $@ -c $<
 
 $(NAME): $(OBJS)
-	ar crs $(NAME) $(OBJS)
+	@ar crs $(NAME) $(OBJS)
 
 clean:
-	rm -f $(OBJS) ${B_OBJS}
+	@rm -f $(OBJS) ${B_OBJS}
 
 fclean: clean
-	rm -f $(NAME)
+	@rm -f $(NAME)
 
 re: fclean all
